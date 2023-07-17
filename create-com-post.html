@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de produtos</title>
+</head>
+<body>  
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <a href="create-com-post.html">Criar produto</a>
+                </li>
+                <li>
+                    <a type="button" href="uptade-com-put.html">Atualizar produto</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <form method="post" class="form">
+            <div id="resposta"></div>
+
+            <label>Descrição:</label>
+            <input id="descricao" type="text">
+
+            <label>Preço:</label>
+            <input id="preco" type="text">
+
+            <label>Imagem:</label>
+            <input id="imagem" type="text">
+
+            <div>
+                <button id="btnCadastro" type="button">Cadastrar</button>
+
+                <button>Atualizar</button>
+            </div>
+        </form>
+
+        <div id="listaProdutos"></div>
+    </main>
+
+    <script src="assets/scripts/script.js"></script>
+
+    <script>
+        document.querySelector('#btnCadastro').addEventListener('click', () => {
+
+            const dados = {
+            'id': null,
+            'descricao': document.querySelector('#descricao').value,
+            'preco': document.querySelector('#preco').value,
+            'imagem': document.querySelector('#imagem').value
+        }
+
+        fetch(`http://localhost:3000/produtos/`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON. stringify(dados)
+        })
+        
+                .then(res => {
+                    if (res.ok) {
+                        document.querySelector('#resposta').innerHTML = 'Produto Atualizado';
+                    }
+                })
+                
+            getProdutos();
+
+            const toggleAtualizar = document.querySelector('#resposta');
+                toggleAtualizar.classList.add('toggle-active');
+                
+                setTimeout(() => {
+                    toggleAtualizar.classList.remove('toggle-active');
+                }, 1500)
+        });
+
+     getProdutos()
+    </script>
+</body>
+</html>

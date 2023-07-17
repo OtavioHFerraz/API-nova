@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    background-color: #e7e7e7;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 800px;
+    list-style: none;
+}
+
+.navbar ul li {
+    padding: 20px;
+}
+
+.navbar ul li a {
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: all 500ms;
+    color: #000;
+}
+
+.navbar .nigth-mode {
+    display: flex;
+    align-items: center;
+    position: relative;
+    right: -320px;
+    width: 60px;
+    height: 28px;
+    padding: 3px;
+    border-radius: 20px;
+    background-color: #c7c5c5;
+    transition: all 500ms ease;
+}
+
+.navbar .nigth-mode.btn-active {
+    background-color: #000;
+}
+
+.navbar .nigth-mode .btn-mode {
+    position: relative;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 400ms;
+    background-color: #ffd000;
+}
+
+.navbar .nigth-mode .btn-mode:active {
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25) inset;
+}
+
+.navbar .nigth-mode .btn-mode.btn-active {
+    position: relative;
+    left: 30px;
+    background-color: #007BED;
+}
+
+
+
+/* ---------------  FORM  --------------- */
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background: #FEFFE4;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 420px;
+    height: 550px;
+    margin: 60px 0 140px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #b4b4b4;
+    background-color: #FFF; 
+}
+
+.form h1 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.box-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.box-input input {
+    width: 304px;
+    height: 34px;
+    margin: 6px 0 30px 0;
+    padding-left: 10px;
+    border-radius: 4px;
+}
+
+.box-input input::placeholder {
+    font-style: italic;  
+}
+
+#listaProdutos {
+    display: flex;
+    flex-direction: column;
+}
+
+#listaProdutos .lista-produtos {
+    text-align: center;
+    font-size: 2rem;
+    color: #000;
+}
+
+#listaProdutos ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 500px;
+    margin: 20px;
+    padding: 10px;
+    list-style: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #b4b4b4;
+    transition: all 500ms;
+    cursor: pointer;
+    background-color: #FFF;
+}
+
+#listaProdutos ul:hover {
+    scale: 1.04;
+}
+
+#listaProdutos ul img {
+    width: 120px;
+}
+
+#listaProdutos ul li {
+    padding: 10px;
+}
+
+#btnAtualizar {
+    width: 167px;
+    height: 46px;
+    font-size: 24px;
+    border-radius: 6px;
+    transition: all 600ms;
+    cursor: pointer;
+    background-color: #48A4FA;
+    color: #FFF;
+}
+
+#btnAtualizar:disabled {
+    background-color: #9b9b9b;
+    color: #dbdbdb;
+}
+
+#btnAtualizar:hover {
+    background-color: #007BED;
+}
+
+#btnAtualizar:active {
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25) inset;
+    background-color: #007BED;
+}
+
+#reset {
+    width: 118px;
+    height: 46px;
+    font-size: 24px;
+    border-radius: 6px;
+    transition: all 600ms;
+    cursor: pointer;
+    background-color: #fab348;
+    color: #FFF;
+}
+
+#reset:disabled {
+    background-color: #9b9b9b;
+    color: #dbdbdb;
+}
+
+#reset:hover {
+    background-color: #ff9900;
+}
+
+#reset:active {
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25) inset;
+    background-color: #ff9900;
+}
+
+
+#resposta {
+    display: inline-block;
+    position: absolute;
+    top: 160px;
+    left: -100%;
+    width: 190px;
+    height: auto;
+    padding: 20px;
+    border-radius: 6px;
+    transition: all 500ms;
+    background-color: #3CCF4E;
+    color: #FFF;
+}
+
+#resposta.toggle-active {
+    left: 30px;
+}
