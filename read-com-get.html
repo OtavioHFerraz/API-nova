@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interação com APIs | Read com GET</title>
+</head>
+
+<body>
+    <header>
+        <a href="./">Home</a>
+        <h1>Read com GET</h1>
+    </header>
+
+    <button type="button" id="btnFetch">Fetch (buscar)</button>
+    <div id="listaProdutos"></div>
+
+    <script src="./assets/scripts/functions.js"></script>
+    
+    <script>
+        document.querySelector('#btnFetch').addEventListener('click', () => {
+            getProdutos();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,172 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualização de produtos</title>
+    <title>Interação com APIs | Update com PUT</title>
 </head>
+
 <body>
     <header>
-        <nav class="navbar">
-            <ul>
-                <li>
-                    <a href="create-com-post.html">Criar produto</a>
-                </li>
-                <li>
-                    <a type="button" href="uptade-com-put.html">Atualizar produto</a>
-                </li>
-                <li>
-                    <div class="nigth-mode">
-                        <button class="btn-mode"></button>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <h1 class="titulo-pagina">Update com PUT</h1>
     </header>
 
+    <div id="resposta"></div>
 
+    <div class="formulario">
+        <h2 class="titulo-formulario">Alteração de Produtos</h2>
 
-    <main>
-        <div id="resposta"></div>
-        
-        <form action="" method="post" class="form">
-            <h1>Alteração de Produtos</h1>
+        <form class="formulario-atualizacao" action="" method="post">
 
-            <div class="box-input">
-                <label>ID</label>
-                <input type="tel" id="id" placeholder="digite o ID do produto">
+            <div class="controle-formulario">
+                <label for="id">ID</label>
+                <input type="text" id="id" placeholder="digite o ID do produto" tabindex="1" autofocus>
             </div>
             
-            <div class="box-input">
-                <label>Descrição</label>
-                <input type="text" id="descricao" placeholder="digite a descrição do produto">
+            <div class="controle-formulario">
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" placeholder="digite o ID do produto" tabindex="2">
             </div>
             
-            <div class="box-input">
-                <label>Preço</label>
-                <input type="text" id="preco" placeholder="Digite o preço do produto">
+            <div class="controle-formulario">
+                <label for="preco">Preço</label>
+                <input type="text" id="preco" placeholder="digite o preço do produto" tabindex="3">
             </div>
             
-            <div class="box-input">
-                <label>Imagem</label>
-                <input type="text" id="imagem" placeholder="Digite o nome da imagem">
+            <div class="controle-formulario">
+                <label for="imagem">Imagem</label>
+                <input type="text" id="imagem" placeholder="digite o nome da imagem do produto" tabindex="4">
             </div>
-            
-            <div>   
-                <button type="button" id="btnAtualizar" disabled>Atualizar</button>
-                
-                <button type="reset" id="reset" disabled>Cancelar</button>
+    
+            <div class="botoes">
+                <button class="bt bt-confirmar" type="button" id="btAtualizar" tabindex="0" disabled>Atualizar</button>
+                <button class="bt bt-cancelar" type="reset" id="btCancelar" tabindex="0" disabled>Cancelar</button>
             </div>
         </form>
 
-        <div id="listaProdutos"></div>
-    </main>
+    </div>
 
-    <script src="assets/scripts/script.js"></script>
+    <div id="listaProdutos"></div>
+
+    <script src="./assets/scripts/styles.js"></script>
+    <script src="./assets/scripts/functions.js"></script>
 
     <script>
 
-        const temaEscuro = localStorage.getItem('modoEscuro');
-       
+        // Desafio 1
+        document.addEventListener('click', event => {
 
-        if(temaEscuro === 'on') {
-            document.rootElement.setAttribute('data-theme', 'modoEscuro');
-        
-        } else {
-            document.rootElement.setAttribute('data-theme', 'modoClaro')
+            if (event.target.closest('ul').classList.contains('produto')) {
+
+                const elementoBase = event.target.closest('ul');
+
+                document.querySelector('input#id').value = elementoBase.querySelector('[data-produto="id"]').innerHTML;
+
+                document.querySelector('input#descricao').value = elementoBase.querySelector('[data-produto="descricao"]').innerHTML;
+
+                document.querySelector('input#preco').value = elementoBase.querySelector('[data-produto="preco"]').innerHTML;
+
+                document.querySelector('input#imagem').value = elementoBase.querySelector('[data-produto="imagem"]').getAttribute('src').split("images/").pop();
+
+                checaInputs(); // Desafio 2
+
+            } 
+        });
+
+        // Desafio 2
+        function checaInputs() {
+
+            // Estas constantes recebem tipo 'boolean'
+            const idPreenchido = document.querySelector('input#id').value !== "";
+            const descricaoPreenchida = document.querySelector('input#descricao').value !== "";
+            const precoPreenchido = document.querySelector('input#preco').value !== "";
+            const imagemPreenchida = document.querySelector('input#imagem').value !== "";
+
+            if (descricaoPreenchida || precoPreenchido || imagemPreenchida || idPreenchido) {
+                document.querySelector('button#btCancelar').removeAttribute('disabled');
+
+                // Desafio 3
+                if (idPreenchido) {
+                    document.querySelector('button#btAtualizar').removeAttribute('disabled');
+                } else {
+                    document.querySelector('button#btAtualizar').setAttribute('disabled', '');
+                }
+
+            } else {
+                document.querySelector('button#btCancelar').setAttribute('disabled', '');
+                document.querySelector('button#btAtualizar').setAttribute('disabled', '');
+            }
         }
 
-        const btnAtualizar = document.querySelector('#btnAtualizar');
-        
-        btnAtualizar.addEventListener('click', () => {
-            const id = document.querySelector('input#id').value;
+        // Complemento desafio 2
+        document.querySelector('form').addEventListener('reset', () => {
+            document.querySelector('#btCancelar').setAttribute('disabled', '');
+            document.querySelector('#btAtualizar').setAttribute('disabled', '');
+        });
+
+        //Complemento desafio 3
+        document.addEventListener('keyup', () => {
+            checaInputs();
+        });
+
+        // Request com o método PUT
+        document.querySelector('#btAtualizar').addEventListener('click', () => {
+
+            const id = document.querySelector('#id').value;
 
             const dados = {
                 'id': null,
                 'descricao': document.querySelector('#descricao').value,
                 'preco': document.querySelector('#preco').value,
                 'imagem': document.querySelector('#imagem').value
-            }
+            };
 
-            fetch(`http://localhost:3000/produtos/${id}`, {
+            fetch(`http://localhost:5500/produtos/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(dados)
             })
-                .then(res => {
-                    if (res.ok) {
-                        document.querySelector('#resposta').innerHTML = 'Produto Atualizado!';
+                .then(response => {
+                    if (response.ok) {
+                        document.querySelector('#resposta').innerHTML = 'Produto atualizado!';
                     }
-                });
+                })
 
-                getProdutos();
+            getProdutos();
 
-                const toggleAtualizar = document.querySelector('#resposta');
-                toggleAtualizar.classList.add('toggle-active');
-                
-                setTimeout(() => {
-                    toggleAtualizar.classList.remove('toggle-active');
-                }, 2500)
-
-            });
+        });
 
         getProdutos();
-            
-        document.addEventListener('click', e => {
-                if(e.target.closest('ul').classList.contains('produto')) {
-                    const elementoBase = e.target.closest('ul')
 
-                    document.querySelector('input#id').value = elementoBase.querySelector('[data-produto="id"]').innerHTML;
-                    document.querySelector('input#descricao').value = elementoBase.querySelector('[data-produto="descricao"]').innerHTML;
-                    document.querySelector('input#preco').value = elementoBase.querySelector('[data-produto="preco"]').innerHTML;
-                    document.querySelector('input#imagem').value = elementoBase.querySelector('[data-produto="imagem"]').innerHTML;
-
-                    limparFormulario();
-
-                } 
-            });
-
-        function limparFormulario() {
-            const idPreenchido = document.querySelector('input#id').value !== "";
-            const descricaoPreenchida = document.querySelector('input#descricao').value !== "";
-            const precoPreenchido = document.querySelector('input#preco').value !== "";
-            const imagemPreenchido = document.querySelector('input#imagem').value !== "";
-            
-            if(idPreenchido || descricaoPreenchida || precoPreenchido || imagemPreenchido) {
-                document.querySelector('button#reset').removeAttribute('disabled', '');
-                document.querySelector('button#btnAtualizar').removeAttribute('disabled', '');
-
-                if(idPreenchido) {
-                    document.querySelector('button#btnAtualizar').removeAttribute('disabled');
-                } else {
-                    document.querySelector('button#btnAtualizar').setAttribute('disabled', '');
-                }
-
-            } else {
-                document.querySelector('button#reset').setAttribute('disabled', '');
-                document.querySelector('button#btnAtualizar').setAttribute('disabled', '');
-            }
-        }
-
-        document.addEventListener('keyup', () => {
-            limparFormulario();
-        });
-        
-        document.querySelector('.form').addEventListener('reset', () => {
-            document.querySelector('button#reset').setAttribute('disabled', '');
-            document.querySelector('button#btnAtualizar').setAttribute('disabled', '');
-        });
-
-        const btnMode = document.querySelector('.btn-mode');
-
-        btnMode.addEventListener('click', () => {
-            const btnTheme = document.querySelector('.nigth-mode');
-
-            btnTheme.classList.toggle('btn-active');
-            btnMode.classList.toggle('btn-active')
-        });
     </script>
+
 </body>
+
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interação com APIs | Delete com DELETE</title>
+</head>
+
+<body>
+    <header>
+        <a href="./">Home</a>
+        <h1>Delete com DELETE</h1>
+    </header>
+
+    <div id="listaProdutos"></div>
+
+    <script src="./assets/scripts/functions.js"></script>
+
+    <script>
+
+        document.addEventListener('click', event => {
+
+            if (event.target.classList.contains('botao-delete')) {
+
+                fetch(`http://localhost:5500/produtos/${event.target.value}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                })
+                    .then(resposta => {
+                        if (resposta.ok) {
+                            alert('Produto apagado!');
+                        }
+                    });
+
+                    getProdutos(true);
+
+            }
+        });
+
+        getProdutos(true);
+
+    </script>
+</body>
+
+</html>

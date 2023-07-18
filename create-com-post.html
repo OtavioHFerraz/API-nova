@@ -1,84 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de produtos</title>
 </head>
-<body>  
-    <header>
-        <nav class="navbar">
-            <ul>
-                <li>
-                    <a href="create-com-post.html">Criar produto</a>
-                </li>
-                <li>
-                    <a type="button" href="uptade-com-put.html">Atualizar produto</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+
+<body>
+    <head>
+        <a href="./">Home</a>
+        <h1>Create usando o método POST</h1>
+    </head>
+
+    <div id="resposta"></div>
     
-    <main>
-        <form method="post" class="form">
-            <div id="resposta"></div>
+    <form action="" method="post">
+        <label for="id">ID:</label>
+        <input type="text" id="id" disabled><br>
 
-            <label>Descrição:</label>
-            <input id="descricao" type="text">
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao"><br>
 
-            <label>Preço:</label>
-            <input id="preco" type="text">
+        <label for="preco">Preço:</label>
+        <input type="text" id="preco"><br>
 
-            <label>Imagem:</label>
-            <input id="imagem" type="text">
+        <label for="imagem">Imagem:</label>
+        <input type="text" id="imagem"><br>
 
-            <div>
-                <button id="btnCadastro" type="button">Cadastrar</button>
+        <button type="button" id="btnCadastrar">Cadastrar</button>
+    </form>
 
-                <button>Atualizar</button>
-            </div>
-        </form>
+    <div id="listaProdutos"></div>
 
-        <div id="listaProdutos"></div>
-    </main>
-
-    <script src="assets/scripts/script.js"></script>
-
+    <script src="./assets/scripts/functions.js"></script>
+    
     <script>
-        document.querySelector('#btnCadastro').addEventListener('click', () => {
+        document.querySelector('#btnCadastrar').addEventListener('click', () => {
 
             const dados = {
-            'id': null,
-            'descricao': document.querySelector('#descricao').value,
-            'preco': document.querySelector('#preco').value,
-            'imagem': document.querySelector('#imagem').value
-        }
+                'id': null,
+                'descricao': document.querySelector('#descricao').value,
+                'preco': document.querySelector('#preco').value,
+                'imagem': document.querySelector('#imagem').value
+            };
 
-        fetch(`http://localhost:3000/produtos/`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON. stringify(dados)
-        })
-        
-                .then(res => {
-                    if (res.ok) {
-                        document.querySelector('#resposta').innerHTML = 'Produto Atualizado';
+            fetch(`http://localhost:5500/produtos`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.querySelector('#resposta').innerHTML = 'Produto cadastrado!';
                     }
                 })
-                
+
             getProdutos();
 
-            const toggleAtualizar = document.querySelector('#resposta');
-                toggleAtualizar.classList.add('toggle-active');
-                
-                setTimeout(() => {
-                    toggleAtualizar.classList.remove('toggle-active');
-                }, 1500)
         });
 
-     getProdutos()
+        getProdutos();
     </script>
+    
 </body>
+
 </html>
